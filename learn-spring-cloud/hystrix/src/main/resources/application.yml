@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: hystrix
+
+server:
+  port: 8085
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}:@project.version@
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+hystrix:
+  command:
+    default: # 全局熔断
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+    hystrixApi: # 指定方法熔断
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+
+
+management:
+  endpoints:
+    web:
+      base-path: /
+      exposure:
+        include: '*'
+
+logging:
+  level:
+    root: info
+    org.springframework.web: trace

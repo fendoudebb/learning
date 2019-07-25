@@ -1,0 +1,34 @@
+spring:
+  application:
+    name: dubbo-zookeeper-provider
+
+embedded:
+  zookeeper:
+    port: 2181
+
+dubbo:
+  metrics:
+    protocol: dubbo
+    port: 20880
+  provider:
+    filter: metrics
+  application:
+    qos-enable: true
+    qos-port: 22222
+    name: ${spring.application.name}
+  monitor:
+    protocol: registry
+    group: dubbo
+  scan:
+    base-packages: learn.dubbo.provider.service # 可用@EnableDubbo注解代替
+  protocol:
+    name: dubbo
+#    port: -1 # Random port
+    port: 20880
+  registry:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
+#    address: redis://127.0.0.1:6379
+    file: ${user.home}/dubbo-cache/${spring.application.name}/dubbo.cache
+  metadata-report:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
+#    address: redis://127.0.0.1:6379

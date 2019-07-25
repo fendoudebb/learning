@@ -1,0 +1,24 @@
+server:
+  port: 8082
+
+spring:
+  profiles:
+    active: native # 告诉config-server，不使用git，而是本地文件夹。必须是native
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: ./config-dir # 指定具体配置文件
+        # git:
+          # uri: https://github.com/fendoudebb/spring-cloud-learn.git
+          # basedir: ./config-dir
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}:@project.version@
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka

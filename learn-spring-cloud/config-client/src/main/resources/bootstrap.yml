@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: config-client
+  cloud:
+    config:
+      discovery:
+        enabled: true
+        service-id: config-server
+      profile: dev
+
+server:
+  port: 8083
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${server.port}:@project.version@
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+

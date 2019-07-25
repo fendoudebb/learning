@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: dubbo-zookeeper-consumer
+
+embedded:
+  zookeeper:
+    port: 2181
+
+dubbo:
+  metrics:
+    protocol: dubbo
+    port: 20880
+  consumer:
+    filter: metrics
+  monitor:
+    protocol: registry
+    group: dubbo
+  registry:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
+    file: ${user.home}/dubbo-cache/${spring.application.name}/dubbo.cache
+  metadata-report:
+    address: zookeeper://127.0.0.1:${embedded.zookeeper.port}
