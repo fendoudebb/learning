@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: spring-boot-admin-server
+  boot:
+    admin:
+      ui:
+        title: Sping Boot监控平台
+      notify:
+        mail:
+          from: ${spring.mail.username}
+          to: receiver@163.com
+
+  security: # 配合AdminServerProperties生成Spring Boot Admin登录页面
+    user:
+      name: admin
+      password: admin123
+  mail:
+    host: smtp.163.com
+    username: username@163.com
+    password: password
+
+server:
+  port: 12345
