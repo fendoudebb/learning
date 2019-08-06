@@ -13,6 +13,7 @@ global_defs {
    smtp_server 192.168.200.1
    smtp_connect_timeout 30
    router_id LVS_01
+   #vrrp_strict  # 严格遵守vvrp协议，不注释访问不了VIP
 }
 
 vrrp_script chk_nginx {
@@ -67,6 +68,7 @@ vrrp_script chk_split_brain {
 vrrp_instance VI_1 {
     state BACKUP # 指定keepalived的角色，MASTER为主，BACKUP为备
     interface eth0
+    nopreempt # 不抢占VIP，MASTER恢复时VIP交给MASTER
     virtual_router_id 51 # 虚拟路由编号，主从要一致
     priority 100 # 优先级，数值越大，获取处理请求的优先级越高，step建议为50
     advert_int 1 # 检查间隔，默认为1s(vrrp组播周期秒数)
