@@ -8,6 +8,8 @@ $n|获取第n个参数（n为数字）
 ${1}|获取第一个参数
 
 ## 预定义变量
+运算符|解释
+:-:|:-:
 $0|获取脚本名称
 $*|获取所有参数
 $@|获取所有参数
@@ -15,6 +17,13 @@ $#|获取参数个数
 $$|获取当前进程的pid
 $!|获取上一个后台进程的pid
 $?|获取上一个命令的执行结果，0表示成功
+
+## 逻辑运算符
+运算符|解释
+:-:|:-:
+-a|逻辑与，and
+-o|逻辑或，or
+!|非
 
 ## 文件比较运算符
 运算符|解释|举例
@@ -41,12 +50,10 @@ $?|获取上一个命令的执行结果，0表示成功
 ## 字符串比较运算符
 运算符|解释|举例
 :-:|:-:|:-:
--z|判断字符串长度是否为0|[ -z "$var" ]
--n|判断字符串长度是否不为0|[ -n "$var" ]
+-z|判断字符串长度是否为0，zero|[ -z "$var" ]
+-n|判断字符串长度是否不为0，nonzero|[ -n "$var" ]
 =|判断两字符串是否相等|[ "$var" = "abc" ]
 !=|判断两字符串是否不等|[ "$var" != "abc" ]
-
-
 
 ## 获取长度
 
@@ -127,3 +134,113 @@ ${var3-ccc}|设置`var3`默认值为`ccc`<br>`var3`有初始化值为空，所�
 ${var3:-ccc}|设置`var3`默认值为`ccc`<br>`var3`有初始化值为空，所以赋值为`ccc`|ccc
 
 
+## case语法
+```bash
+case 变量 in
+可能值1)
+    命令1
+    ;;
+可能值2)
+   命令2
+   ;; 
+可能值n)
+   命令n
+   ;; 
+*)
+    无匹配
+esac
+```
+
+## if语法
+```bash
+if 条件
+then 命令
+elif 条件
+then 命令
+else 命令
+fi
+```
+
+可格式化为
+```bash
+if 条件 ; then
+    命令
+elif 条件; then
+    命令
+else
+    命令
+fi
+```
+
+## for语法
+```bash
+for i in `seq 10`
+do
+    echo $i
+done
+```
+
+## while语法
+```bash
+#!/bin/bash
+i=0
+while [ $i < 10 ]
+do
+    echo $i
+    let i++
+done
+```
+
+从test.txt文件中读取
+```bash
+#!/bin/bash
+while read aaa
+do
+    echo $aaa
+done < test.txt
+```
+
+## until语法
+与while想反，条件不成立则进入
+```bash
+#!/bin/bash
+i=0
+until [ $i > 10 ]
+do
+    echo $i
+    let i++
+done
+```
+
+## 语法
+### 清空1.txt文件
+```bash
+>1.txt
+```
+
+### 取一组数
+```bash
+#!/bin/bash
+for i in {1..10}
+do
+    echo $i
+done
+```
+或着
+```bash
+seq 1 10
+```
+
+### 等待键盘输入
+```bash
+read -p "请输入："
+```
+
+### 放入后台执行
+```bash
+#!/bin/bash
+{
+    echo
+}&
+wait
+```
