@@ -9,6 +9,44 @@ import io.netty.util.CharsetUtil;
 
 public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObject> {
 
+    @Override
+    public boolean isSharable() {
+        boolean sharable = super.isSharable();
+        System.out.println("TestHttpServerHandler.isSharable#" + sharable);
+        return sharable;
+    }
+
+    @Override
+    public void handlerAdded(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.handlerAdded");
+        super.handlerAdded(ctx);
+    }
+
+    @Override
+    public void channelRegistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelRegistered");
+        super.channelRegistered(ctx);
+    }
+
+    @Override
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelActive");
+        super.channelActive(ctx);
+    }
+
+    @Override
+    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        System.out.println("TestHttpServerHandler.channelRead, msg#" + msg.getClass());
+        super.channelRead(ctx, msg);
+    }
+
+    @Override
+    public boolean acceptInboundMessage(Object msg) throws Exception {
+        System.out.println("TestHttpServerHandler.acceptInboundMessage");
+        return super.acceptInboundMessage(msg);
+    }
+
+    @Override
     protected void channelRead0(ChannelHandlerContext ctx, HttpObject msg) throws Exception {
 
         /*
@@ -36,7 +74,17 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
         解决方法：添加判断if (msg instanceof HttpRequest) {}
         */
 
+        System.out.println("TestHttpServerHandler.channelRead0, remoteAddress#" + ctx.channel().remoteAddress() + ", msg#" + msg.getClass());
+
         if (msg instanceof HttpRequest) {
+            HttpRequest httpRequest = (HttpRequest) msg;
+            System.out.println("请求方法：" + httpRequest.method().name());
+            System.out.println("请求路径：" + httpRequest.uri());
+            if ("/favicon.ico".equals(httpRequest.uri())) {
+                System.out.println("请求favicon.ico");
+                return;
+            }
+
             ByteBuf content = Unpooled.copiedBuffer("Hello World!", CharsetUtil.UTF_8);
             FullHttpResponse response = new DefaultFullHttpResponse(HttpVersion.HTTP_1_1, HttpResponseStatus.OK, content);
             response.headers().set(HttpHeaderNames.CONTENT_TYPE, HttpHeaderValues.TEXT_PLAIN);
@@ -44,6 +92,54 @@ public class TestHttpServerHandler extends SimpleChannelInboundHandler<HttpObjec
 
             ctx.writeAndFlush(response);
         }
-
     }
+
+    @Override
+    public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelReadComplete");
+        super.channelReadComplete(ctx);
+    }
+
+    @Override
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelInactive");
+        super.channelInactive(ctx);
+    }
+
+    @Override
+    public void channelUnregistered(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelUnregistered");
+        super.channelUnregistered(ctx);
+    }
+
+    @Override
+    public void handlerRemoved(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.handlerRemoved");
+        super.handlerRemoved(ctx);
+    }
+
+    @Override
+    public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+        System.out.println("TestHttpServerHandler.userEventTriggered, evt#" + evt.getClass());
+        super.userEventTriggered(ctx, evt);
+    }
+
+    @Override
+    public void channelWritabilityChanged(ChannelHandlerContext ctx) throws Exception {
+        System.out.println("TestHttpServerHandler.channelWritabilityChanged");
+        super.channelWritabilityChanged(ctx);
+    }
+
+    @Override
+    public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
+        System.out.println("TestHttpServerHandler.exceptionCaught#" + cause.getMessage());
+        super.exceptionCaught(ctx, cause);
+    }
+
+    @Override
+    protected void ensureNotSharable() {
+        System.out.println("TestHttpServerHandler.ensureNotSharable");
+        super.ensureNotSharable();
+    }
+
 }
