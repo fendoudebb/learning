@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>WebSocket-Test</title>
+</head>
+<body>
+
+<script>
+    var socket;
+
+    if (!window.WebSocket) {
+        alert("不支持WebSocket");
+    } else {
+        socket = new WebSocket("ws://localhost:8899/ws");
+        socket.onmessage = function (ev) {
+            var resText = document.getElementById("resText");
+            resText.value = resText.value + "\n" + ev.data;
+        };
+
+        socket.onopen = function (ev) {
+            var resText = document.getElementById("resText");
+            resText.value = "连接开启！";
+        };
+
+        socket.onclose = function (ev) {
+            var resText = document.getElementById("resText");
+            resText.value = resText.value + "\n" + "连接关闭！";
+        }
+    }
+    
+    function send(message) {
+        if (!window.WebSocket) {
+            return;
+        }
+
+        if (socket.readyState === WebSocket.OPEN) {
+            socket.send(message);
+        } else {
+            alert("连接尚未打开！");
+        }
+    }
+
+</script>
+
+<form onsubmit="return false">
+    <textarea name="message" id="" cols="30" rows="10">
+
+    </textarea>
+    <input type="button" value="发送" onclick="send(this.form.message.value)">
+
+    <h3>服务端输出</h3>
+
+    <textarea name="" id="resText" cols="30" rows="10">
+        
+    </textarea>
+
+    <input type="button" onclick="javascript:document.getElementById('resText').value('')" value="清空">
+
+</form>
+
+
+</body>
+</html>
