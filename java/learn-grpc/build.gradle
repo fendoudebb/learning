@@ -1,0 +1,50 @@
+
+apply plugin: 'java'
+apply plugin: 'com.google.protobuf'
+
+group 'learn.grpc'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    implementation 'io.grpc:grpc-netty-shaded:1.23.0'
+    implementation 'io.grpc:grpc-protobuf:1.23.0'
+    implementation 'io.grpc:grpc-stub:1.23.0'
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.10'
+    }
+}
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.9.0"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.23.0'
+        }
+    }
+
+    generatedFilesBaseDir = "src"
+
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                outputSubDir = 'java'
+            }
+        }
+    }
+}
