@@ -1,56 +1,84 @@
+import random
+import sys
+
 import pygame
 from pygame.locals import *
 import time
 
 window_x = 480
 window_y = 500
+hero_speed = 20
 
 
-class Hero:
-    def __init__(self, screen):
+class BasePlane:
+
+    def __init__(self, screen, image_name):
         self.screen = screen
-        self.image = pygame.image.load("./file/hero1.png")
+        self.image = pygame.image.load(image_name)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
         self.x = (window_x - self.width) / 2
-        self.y = window_y - self.height
+        if isinstance(self, Hero):
+            self.y = window_y - self.height
+        else:
+            self.y = 0
         self.bullet_list = []
 
     def display(self):
         self.screen.blit(self.image, (self.x, self.y))
-        for bullet in self.bullet_list:
+        # for bullet in self.bullet_list:
+        #    bullet.display()
+        #    bullet.move()
+        #    if bullet.judge():
+        #        self.bullet_list.remove(bullet)
+
+        for bullet_index in range(len(self.bullet_list) - 1, -1, -1):
+            bullet = self.bullet_list[bullet_index]
             bullet.display()
             bullet.move()
-
-    def move_left(self):
-        self.x -= 5
-
-    def move_right(self):
-        self.x += 5
-
-    def move_up(self):
-        self.y -= 5
-
-    def move_down(self):
-        self.y += 5
+            if bullet.judge():
+                self.bullet_list.remove(bullet)
 
     def fire(self):
-        self.bullet_list.append(Bullet(self.screen, self.x, self.y))
+        self.bullet_list.append(Bullet(self.screen, self.x, self.y, self.width))
 
 
-class Enemy:
-    def __init__(self, screen):
+class BaseBullet:
+    def __init__(self, screen, image_name):
         self.screen = screen
-        self.image = pygame.image.load("./file/enemy0.png")
+        self.image = pygame.image.load(image_name)
         self.width = self.image.get_width()
         self.height = self.image.get_height()
-        self.x = (window_x - self.width) / 2
-        self.y = 0
-        self.bullet_list = []
-        self.direction = 'right'
 
-    def display(self):
-        self.screen.blit(self.image, (self.x, self.y))
+
+class Hero(BasePlane):
+    def __init__(self, screen):
+        super().__init__(screen, "./file/hero1.png")
+
+    def move_left(self):
+        if self.x > 0:
+            self.x -= hero_speed
+        if self.x < 0:
+            self.x = 0
+
+    def move_right(self):
+        width = window_x - self.width
+        if self.x > width:
+            self.x = width
+        if self.x < width:
+            self.x += hero_speed
+
+    def move_up(self):
+        self.y -= hero_speed
+
+    def move_down(self):
+        self.y += hero_speed
+
+
+class Enemy(BasePlane):
+    def __init__(self, screen):
+        super().__init__(screen, "./file/enemy0.png")
+        self.direction = 'right'
 
     def move(self):
         if self.direction == 'right':
@@ -58,28 +86,47 @@ class Enemy:
         elif self.direction == 'left':
             self.x -= 5
 
-        if self.x > 200:
+        if self.x > window_x - self.width:
             self.direction = 'left'
-        elif self.x <0:
+        elif self.x < 0:
             self.direction = 'right'
 
-
     def fire(self):
-        self.bullet_list.append(Bullet(self.screen, self.x, self.y))
+        random_num = random.randint(1, 100)
+        if random_num == 40 or random_num == 60:
+            self.bullet_list.append(EnemyBullet(self.screen, self.x, self.y, self.width))
 
 
-class Bullet:
-    def __init__(self, screen, x, y):
-        self.screen = screen
-        self.x = x + 40
+class Bullet(BaseBullet):
+    def __init__(self, screen, x, y, plane_x):
+        super().__init__(screen, "./file/bullet.png")
+        self.x = x + (plane_x / 2) - self.width / 2
         self.y = y - 20
-        self.image = pygame.image.load("./file/bullet.png")
 
     def display(self):
         self.screen.blit(self.image, (self.x, self.y))
 
     def move(self):
         self.y -= 10
+
+    def judge(self):
+        return self.y < 0
+
+
+class EnemyBullet(BaseBullet):
+    def __init__(self, screen, x, y, plane_x):
+        super().__init__(screen, "./file/bullet1.png")
+        self.x = x + (plane_x / 2) - self.width / 2
+        self.y = y + 40
+
+    def display(self):
+        self.screen.blit(self.image, (self.x, self.y))
+
+    def move(self):
+        self.y += 5
+
+    def judge(self):
+        return self.y > window_y
 
 
 def keyboard_control(hero):
@@ -89,7 +136,7 @@ def keyboard_control(hero):
         # 判断是否是点击了退出按钮
         if event.type == QUIT:
             print("exit")
-            exit()
+            sys.exit()
         # 判断是否是按下了键
         elif event.type == KEYDOWN:
             # 检测按键是否是a或者left
@@ -132,6 +179,8 @@ def main():
         screen.blit(background, (0, 0))
         hero.display()
         enemy.display()
+        enemy.move()
+        enemy.fire()
         keyboard_control(hero)
         # 更新需要显示的内容
         pygame.display.update()
