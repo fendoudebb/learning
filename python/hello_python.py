@@ -61,7 +61,7 @@ b = 2
 print("a - b = %d" % (a - b))
 print("a + b = %d" % (a + b))
 print("a * b = %d" % (a * b))
-print("a / b = %d" % (a / b))
+print("a / b = %f" % (a / b))
 # //取a除b的商
 print("a 除 b 的商 = %d" % (a // b))
 # %%字符串中打印%
