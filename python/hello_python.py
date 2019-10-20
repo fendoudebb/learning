@@ -574,6 +574,152 @@ def func1():
 # 调用func1()函数前，已经装饰好了。
 func1()
 
+
+class TestMethodType:
+    # __slots__限制只能添加的属性或方法
+    __slots__ = ("num", "test_method_type1", "test_method_type2")
+
+    def __init__(self):
+        print("test method type init")
+
+
+def test_method_type1():
+    print("test_method_type1")
+
+
+def test_method_type2(self):
+    print("test_method_type2")
+
+
+tmt = TestMethodType()
+# 动态添加类属性
+tmt.num = 100
+print(tmt.num)
+# 动态添加类方法
+tmt.test_method_type1 = test_method_type1
+tmt.test_method_type1()
+
+import types
+
+# types.MethodType()动态添加类方法
+tmt.test_method_type2 = types.MethodType(test_method_type2, tmt)
+tmt.test_method_type2()
+
+try:
+    tmt.name = "aaa"
+except Exception as exception:
+    print(exception)
+
+# dir()打印对象拥有的方法，list
+print(dir(tmt))
+
+
+# yield生成器，斐波那契数列
+def fib(count):
+    a, b = 0, 1
+    for i in range(count):
+        # yield 生成的生成器可用next()迭代
+        yield b
+        a, b = b, a + b
+
+
+for num in fib(5):
+    print(num)
+
+
+class WarpClass:
+    def __init__(self, func):
+        print("init, func name is %s" % func.__name__)
+        self.__func = func
+
+    def __call__(self, *args, **kwargs):
+        print("类装饰器")
+        self.__func()
+
+
+@WarpClass
+def test_class_warp():
+    print("test class warp")
+
+
+test_class_warp()
+
+
+class GetAttr:
+    def __init__(self):
+        self.private_attr = "private_attr"
+
+    # 属性访问时拦截器，此方法内使用self.会有坑
+    def __getattribute__(self, item):
+        if item == 'private_attr':
+            return "public_attr"
+        else:
+            return item.__getattribute__
+
+
+ga = GetAttr()
+print(ga.private_attr)
+
+for m in map(lambda x: x * x, [1, 2, 3]):
+    print(m)
+
+print("-" * 20)
+
+for m in map(lambda x, y: x + y, [1, 2, 3], [4, 5, 6]):
+    print(m)
+
+print("-" * 20)
+
+# [1, 3], 1%2=1, lambda返回为True的值
+for f in filter(lambda x: x % 2, [1, 2, 3, 4]):
+    print(f)
+
+print("-" * 20)
+
+for f in filter(None, "abcdefg"):
+    print(f)
+
+print("-" * 20)
+
+from functools import reduce
+
+# 10
+print(reduce(lambda x, y: x + y, [1, 2, 3, 4]))
+# 15
+print(reduce(lambda x, y: x + y, [1, 2, 3, 4], 5))
+# ddaabbcc
+print(reduce(lambda x, y: x + y, ['aa', 'bb', 'cc'], 'dd'))
+
+print(sorted([1, 5, 3, 2]))
+
+print(sorted([1, 5, 3, 2], reverse=True))
+
+# set集合，不存放重复值
+set_a = {1, 2, 3, 3, 4, 6}
+print(set_a)
+
+set_b = {1, 2, 3, 100, 200, 300}
+# & 取交集
+print(set_a & set_b)
+# | 取并集
+print(set_a | set_b)
+# - 取差集, a对b的差集, {4, 6}
+print(set_a - set_b)
+# - 取差集, b对a的差集, {200, 100, 300}
+print(set_b - set_a)
+# ^ 取对称差集, 在a或b中, 但不会同时出现在二者中
+print(set_b ^ set_a)
+
+import hashlib
+
+md5 = hashlib.md5()
+md5.update(b'123')
+print(md5.hexdigest())
+str = "123".encode("UTF-8")
+print(str, md5.hexdigest())
+
+# python -m http.server 8888
+
 # 使用python执行此文件时，__name__的值就等于__main__
 if __name__ == '__main__':
     print(__name__)
