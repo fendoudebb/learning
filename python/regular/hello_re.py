@@ -90,3 +90,34 @@ print(re.match(r'[1-9]\d?$|0$|100$', '100').group())
 # 融合0这种情况
 print(re.match(r'[1-9]?\d?$|100$', '0').group())
 
+# () 将括号中的字符串作为一个分组
+# <h1>标题</h1>
+print(re.match(r'(<h1>).*(</h1>)', '<h1>标题</h1>').group(0))
+# group(1) 第一个分组 <h1>
+print(re.match(r'(<h1>).*(</h1>)', '<h1>标题</h1>').group(1))
+# group(2) 第二个分组 </h1>
+print(re.match(r'(<h1>).*(</h1>)', '<h1>标题</h1>').group(2))
+
+# \num 取分组的值
+print(re.match(r'<(.+)><(.+)>.+</\2></\1>', '<html><h1>标题</h1></html>').group())
+
+# (?P<name>) 分组起别名
+# (?P=name) 引用别名分组
+print(re.match(r'<(?P<key1>.+)><(?P<key2>.+)>.+</(?P=key2)></(?P=key1)>', '<html><h1>标题</h1></html>').group())
+
+# search 匹配到第一个就返回
+print(re.search(r'\bhello$', 'python hello').group())
+# findall 匹配所有
+print(re.findall(r'hello', 'python hello, java hello'))
+# sub 替换所有匹配的
+print(re.sub(r'hello', 'HELLO', 'python hello, java hello'))
+print(re.sub(r'hello', 'HELLO', 'python hello, java hello'))
+
+# split 根据匹配切割字符串
+# ['Python', 'Java', 'C++', 'PHP', 'Golang']
+print(re.split(r':|-|,| ', 'Python Java:C++,PHP-Golang'))
+
+# 贪婪模式
+print(re.match(r'(.+)(\d+-\d+-\d+-\d+)', 'This is number 123-456-789-0').groups())
+# 加?关闭贪婪模式
+print(re.match(r'(.+?)(\d+-\d+-\d+-\d+)', 'This is number 123-456-789-0').groups())
