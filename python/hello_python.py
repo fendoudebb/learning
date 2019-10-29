@@ -4,6 +4,8 @@
 Python 国内镜像 http://npm.taobao.org/mirrors/python
 """
 
+# https://www.jetbrains.com/help/pycharm/2017.1/type-hinting-in-pycharm.html
+
 # 多个占位符
 # %.2f保留浮点数后两位，默认保留小数点后6位
 
