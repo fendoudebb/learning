@@ -318,6 +318,10 @@ file.write("aaa")
 # close()关闭文件
 file.close()
 
+# with open 可以不用关闭操作
+with open('1.txt', 'w') as f:
+    f.write('bbb')
+
 # open()以读模式打开文件
 file = open("1.txt", "r")
 # read()读取文件中的所有内容
@@ -554,6 +558,7 @@ def warp_func1(func):
         print("begin warp1")
         func(*args, **kwargs)
         print("end warp1")
+
     return inner
 
 
@@ -562,6 +567,7 @@ def warp_func2(func):
         print("begin warp2")
         func(*args, **kwargs)
         print("end warp2")
+
     return inner
 
 
