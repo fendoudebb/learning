@@ -7,9 +7,16 @@ from urllib import request
 from http.client import HTTPResponse
 from urllib import parse
 
-response1 = request.urlopen('http://www.baidu.com')  # type: HTTPResponse
-html = response1.read()
-print(html)
+try:
+    response1 = request.urlopen('http://www.baidu.com')  # type: HTTPResponse
+    html = response1.read()
+    print(html)
+except request.URLError as err:
+    # URLError产生的原因
+    # 1. 没有网络连接
+    # 2. 服务器连接失败
+    # 3. 找不到指定的服务器
+    print(err)
 
 headers = {
     'User-Agent':
@@ -20,20 +27,25 @@ headers = {
 # 不安全的CA证书会报：urllib.error.URLError: <urlopen error [SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed:
 # self signed certificate in certificate chain (_ssl.c:1076)>
 
-# 忽略SSL安全认证
-context = ssl._create_unverified_context()
 
-# GET请求，不带data参数；POST参数携带data参数
-req = request.Request('https://inv-veri.chinatax.gov.cn', headers=headers)
-response2 = request.urlopen(req, context=context)  # type: HTTPResponse
-print(response2.read())
+try:
+    # 忽略SSL安全认证
+    context = ssl._create_unverified_context()
+    # GET请求，不带data参数；POST参数携带data参数
+    req = request.Request('https://inv-veri.chinatax.gov.cn', headers=headers)
+    response2 = request.urlopen(req, context=context)  # type: HTTPResponse
+    print(response2.read())
+    # 响应码
+    print(response2.getcode())
+    # 返回数据的实际URL，防止重定向问题
+    print(response2.geturl())
+    # 返回服务器响应的HTTP报头
+    print(response2.info())
+except request.HTTPError as err:
+    # HTTPError是URLError的子类
+    # HTTP Error 404: Not Found
+    print(err)
 
-# 响应码
-print(response2.getcode())
-# 返回数据的实际URL，防止重定向问题
-print(response2.geturl())
-# 返回服务器响应的HTTP报头
-print(response2.info())
 
 ua_list = [
     'ua1',
