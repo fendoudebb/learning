@@ -726,6 +726,13 @@ print(md5.hexdigest())
 str = "123".encode("UTF-8")
 print(str, md5.hexdigest())
 
+# 逐行读取，读取大文本，for in 迭代器
+with open(file='README.md', encoding='utf-8') as f:
+    for line in f:
+        print(line)
+        # 去除换行
+        print(line.strip())
+
 # python -m http.server 8888
 
 # 使用python执行此文件时，__name__的值就等于__main__
