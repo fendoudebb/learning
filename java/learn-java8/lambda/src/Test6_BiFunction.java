@@ -1,10 +1,10 @@
 import java.util.function.BiFunction;
 import java.util.function.Function;
 
-public class BiFunctionTest {
+public class Test6_BiFunction {
 
     public static void main(String[] args) {
-        BiFunctionTest biFunctionTest = new BiFunctionTest();
+        Test6_BiFunction biFunctionTest = new Test6_BiFunction();
         System.out.println(biFunctionTest.compute(1, 2, Integer::sum));
 
 

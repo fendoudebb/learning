@@ -1,9 +1,9 @@
 import java.util.function.Function;
 
-public class FunctionTest2 {
+public class Test5_Function {
 
     public static void main(String[] args) {
-        FunctionTest2 functionTest2 = new FunctionTest2();
+        Test5_Function functionTest2 = new Test5_Function();
         System.out.println(functionTest2.compute(2, integer -> integer * 2, integer -> integer * integer));
         System.out.println(functionTest2.compute2(2, integer -> integer * 2, integer -> integer * integer));
 

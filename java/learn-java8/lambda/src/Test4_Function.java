@@ -1,12 +1,9 @@
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public class FunctionTest {
+public class Test4_Function {
 
     public static void main(String[] args) {
-        FunctionTest test = new FunctionTest();
+        Test4_Function test = new Test4_Function();
 
         //Function 传递的不是值，是行为
         System.out.println(test.compute(1, integer -> integer * 2));
