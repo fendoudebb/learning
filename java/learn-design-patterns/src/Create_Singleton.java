@@ -17,6 +17,8 @@ public class Create_Singleton {
  * 1. 无多线程问题
  * 2. 未达到懒加载效果，可能造成内存浪费
  * 3. 可以使用
+ *
+ * @see     java.lang.Runtime
  */
 class Singleton1 {
     //1. 私有化构造函数，保证外部不能直接new
