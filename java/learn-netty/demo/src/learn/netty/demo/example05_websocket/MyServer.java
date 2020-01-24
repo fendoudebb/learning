@@ -4,12 +4,12 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.http.websocketx.PingWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.logging.LoggingHandler;
 
 import java.time.LocalDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class MyServer {
 
@@ -18,8 +18,16 @@ public class MyServer {
         EventLoopGroup workerGroup = new NioEventLoopGroup();
 
         ServerBootstrap serverBootstrap = new ServerBootstrap();
+        workerGroup.scheduleAtFixedRate(
+                () -> {
+                    System.out.println("定时任务开启");
+                    TextWebSocketFrameHandler.channelGroup.writeAndFlush(new TextWebSocketFrame("定时任务：" + LocalDateTime.now()));
+                },
+                3,
+                1,
+                TimeUnit.SECONDS);
 
-        new Thread(() -> {
+        /*new Thread(() -> {
             while (true) {
                 try {
                     TextWebSocketFrameHandler.channelGroup.writeAndFlush(new TextWebSocketFrame("定时任务：" + LocalDateTime.now()));
@@ -29,7 +37,7 @@ public class MyServer {
                     e.printStackTrace();
                 }
             }
-        }).start();
+        }).start();*/
 
         try {
             serverBootstrap.group(bossGroup, workerGroup)
