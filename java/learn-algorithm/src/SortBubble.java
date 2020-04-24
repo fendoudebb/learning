@@ -77,7 +77,7 @@ public class SortBubble {
             }
             System.out.println("第" + (j + 1) + "次排序：" + Arrays.toString(arr));
             if (!flag) {
-//                break;
+                break;
             } else {
                 flag = false;
             }
