@@ -18,6 +18,37 @@ fn main() {
     // while_fn()
     // for_fn()
     // ownership();
+    reference_borrowing();
+}
+
+fn reference_borrowing() {
+    let s1 = String::from("hello");
+    let len = calculate_length2(&s1);
+    println!("The length of '{}' is {}.", s1, len);
+    let mut s = String::from("hello");
+    change(&mut s);
+    println!("s={}", s);
+    let mut s3 = String::from("hello");
+    {
+        let r1 = &mut s3;
+    }
+    // r1 在这一行超出作用域，所以我们可以创建一个新的引用
+    let r2 = &mut s3;
+    let mut s4 = String::from("hello");
+    let r3 = &s4; // no problem
+    let r4 = &s4; // no problem
+    println!("{} and {}", r3, r4);
+    // r3 and r3 在这之后不再使用
+    let r5 = &mut s4; // no problem
+    println!("{}", r5);
+}
+
+fn change(some_string: &mut String) {
+    some_string.push_str(", world");
+}
+
+fn calculate_length2(s: &String) -> usize {
+    s.len()
 }
 
 fn ownership() {
@@ -90,7 +121,6 @@ fn ownership_fn1() {
 
     makes_copy(x);                  // x 移入函数中，
     // 但是 i32 是可`Copy`，所以再这一行之后还可以继续使用 x
-
 } // 这一行，x 超出作用域，接着是 s。但因为 s 的值已经移动了，没有特殊处理了。
 
 
