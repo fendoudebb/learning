@@ -1,5 +1,5 @@
 [package]
-name = "learn-rust"
+name = "trpl_02_guess_game"
 version = "0.1.0"
 authors = ["fendoudebb <15317832520@163.com>"]
 edition = "2018"
