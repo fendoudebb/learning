@@ -1,6 +1,72 @@
 fn main() {
     ownership();
     reference_borrowing();
+
+    // find_first_word_index();
+    let s = String::from("hello world");
+
+    let hello = &s[0..5];
+    let world = &s[6..11];
+
+    let slice1 = &s[0..2];
+    let slice2 = &s[..2];
+
+    let len = s.len();
+
+    let slice3 = &s[3..len];
+    let slice4 = &s[3..];
+
+    let slice5 = &s[0..len];
+    let slice6 = &s[..];
+
+    println!("{} = {}", hello, world);
+    println!("slice1={}, slice2={}", slice1, slice2);
+    println!("slice3={}, slice4={}", slice3, slice4);
+    println!("slice5={}, slice6={}", slice5, slice6);
+
+    let mut s2 = String::from("hello world");
+
+    let word = first_word2(&s2);
+
+    s2.clear(); // error!
+
+    // 注释掉这句话能编译通过，因为不可变引用没有使用
+    // println!("the first word is: {}", word);
+
+    let a = [1, 2, 3, 4, 5];
+
+    let slice = &a[1..3];
+}
+
+fn first_word2(s: &String) -> &str {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return &s[0..i];
+        }
+    }
+
+    &s[..]
+}
+
+fn find_first_word_index() {
+    let mut s = String::from("hello world");
+    let word = first_word(&s);
+    s.clear();
+    println!("word={}", word);
+}
+
+fn first_word(s: &String) -> usize {
+    let bytes = s.as_bytes();
+
+    for (i, &item) in bytes.iter().enumerate() {
+        if item == b' ' {
+            return i;
+        }
+    }
+
+    s.len()
 }
 
 fn reference_borrowing() {
