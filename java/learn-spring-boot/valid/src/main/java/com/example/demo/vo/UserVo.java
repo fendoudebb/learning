@@ -40,8 +40,4 @@ public class UserVo {
     @NotNull(message = "信息不能为空")
     private Info info;
 
-
-
-
-
 }

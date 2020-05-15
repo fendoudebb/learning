@@ -23,3 +23,27 @@ public class DemoApplication {
     }
 
 }
+
+/*
+{
+    "name": "123",
+    "email": "111@com",
+    "age": 0,
+    "negative": -1,
+    "positive": 1,
+    "info": {
+        "integer1": 0,
+        "integer2": 1,
+        "hobbies": [
+            "basketball",
+            "basketball",
+            "basketball"
+        ],
+        "skills": [
+            "Java",
+            "PHP",
+            "Rust"
+        ]
+    }
+}
+*/
