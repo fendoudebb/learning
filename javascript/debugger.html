@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+
+        document.onkeydown = function (event) {
+            if (event.key === "F12") {
+                document.body.innerHTML='年轻人，不要太好奇';
+                window.close();
+                window.location = "about:blank";
+            } else if (event.ctrlKey && event.shiftKey && event.key === "I") {
+                document.body.innerHTML='年轻人，不要太好奇';
+                window.close();
+                window.location = "about:blank";
+            } else if (event.ctrlKey && event.key === "s") {
+                document.body.innerHTML='年轻人，不要太好奇';
+                event.preventDefault();
+                window.close();
+                window.location = "about:blank";
+            }
+
+        };
+
+        document.oncontextmenu = function () {
+            document.body.innerHTML='年轻人，不要太好奇';
+            window.close();
+            window.location = "about:blank";
+        };
+
+        //控制台打开的时候回调方法
+        function consoleOpenCallback(){
+            document.body.innerHTML='年轻人，不要太好奇';
+            window.close();
+            window.location = "about:blank";
+            return "";
+        }
+
+        //立即运行函数，用来检测控制台是否打开
+        !function () {
+            // 创建一个对象
+            let foo = /./;
+            // 将其打印到控制台上，实际上是一个指针
+            console.log(foo);
+            // 要在第一次打印完之后再重写toString方法
+            foo.toString = consoleOpenCallback;
+        }();
+
+        var h = window.innerHeight, w = window.innerWidth;
+
+        window.onresize = function () {
+            if (h !== window.innerHeight || w !== window.innerWidth) {
+                document.body.innerHTML = '年轻人，不要太好奇';
+                window.close();
+                window.location = "about:blank";
+            }
+        };
+
+        function consoleOpenCallback2() {
+            document.body.innerHTML='年轻人，不要太好奇';
+            window.close();
+            window.location = "about:blank";
+        }
+
+        setInterval(function () {
+            const before = new Date();
+            (function(){}).constructor("debugger")();
+            // debugger;
+            const after = new Date();
+            const cost = after.getTime() - before.getTime();
+            if (cost > 100) {
+                consoleOpenCallback2();
+            }
+        }, 1000);
+
+    </script>
+</head>
+<body>
+这是网站内容
+</body>
+</html>
