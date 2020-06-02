@@ -121,5 +121,10 @@ public class ScheduleTask {
         });
     }
 
+    @Scheduled(cron = "0 * 21-23,0-5 * * ?")
+    public void test1() {
+        System.out.println(LocalDateTime.now().toString())
+    }
+
 
 }
