@@ -28,6 +28,12 @@ public class DemoApplication implements ApplicationRunner {
         SpringApplication.run(DemoApplication.class, args);
     }
 
+    @Scheduled(cron = "0 * 21-23,0-5 * * ?")
+    public void cron() {
+//        log.info(LocalDateTime.now().toString());
+        clean();
+    }
+
     public void clean() {
         LocalDate localDate = LocalDate.now().minusMonths(6);
         System.out.println(localDate.toString());
@@ -36,7 +42,7 @@ public class DemoApplication implements ApplicationRunner {
         System.out.println(localDate.toString() + "#" + objectId.toHexString());
         log.info("now#{}, ObjectId#{}", localDate.toString(), objectId.toHexString());
 
-        Query query = Query.query(Criteria.where("_id").lt(objectId)).limit(1);
+        Query query = Query.query(Criteria.where("_id").lt(objectId)).limit(10000);
 
         long now = System.currentTimeMillis();
 
