@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        setInterval(function () {
+            const before = new Date();
+            (function (a) {
+                return (function (a) {
+                    return (Function('Function(arguments[0]+"' + a + '")()'))
+                })(a)
+            })('bugger')('de');
+
+            // Function('debugger')();
+
+            // debugger;
+            const after = new Date();
+            const cost = after.getTime() - before.getTime();
+            if (cost > 100) {
+                consoleOpenCallback2();
+            }
+
+        }, 1000);
+    </script>
+</head>
+<body>
+test
+</body>
+</html>
