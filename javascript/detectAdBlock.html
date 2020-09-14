@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="testAd" class="google-ad">这里是一个广告位</div>
+this is html
+</body>
+<script>
+    function detectAdBlock() {
+        let adElement = document.getElementById("testAd");
+        return "none" === window.getComputedStyle(adElement).display
+    }
+
+    window.onload = function () {
+        console.log(detectAdBlock());
+    }
+</script>
+</html>
