@@ -10,7 +10,7 @@
         * @param  {String} url 目标文件地址
         * @param  {String} filename 想要保存的文件名称
         */
-        function courseDownload(url, filename) {
+        function fileDownload(url, filename) {
             getBlob(url, function(blob) {
                 saveAs(blob, filename);
             })
@@ -54,7 +54,11 @@
     </script>
 </head>
 <body>
-<a referrerPolicy="no-referrer" href="javascript:void(0)" onclick="courseDownload('https://img-blog.csdnimg.cn/20200911152522422.jpg','ccc.jpg')">download</a>
+<a referrerPolicy="no-referrer" href="javascript:void(0)" onclick="fileDownload('https://img-blog.csdnimg.cn/20200911152522422.jpg','ccc.jpg')">download</a>
+
+<br>
+
+<a href="https://img-blog.csdnimg.cn/20200911152522422.jpg" download="test.jpg">download2</a>
 
 </body>
 </html>
