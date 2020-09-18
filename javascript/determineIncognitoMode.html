@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        !function () {
+            let fs = window.RequestFileSystem || window.webkitRequestFileSystem;
+            if (!fs) {
+                console.log("check failed?");
+            } else {
+                fs(window.TEMPORARY, 100, function () {
+                    console.log('FileSystem#非无痕模式')
+                }, function () {
+                    console.log('FileSystem#无痕模式');
+                });
+            }
+        }();
+
+        !function () {
+            if ('storage' in navigator && 'estimate' in navigator.storage) {
+                navigator.storage.estimate().then(function (estimate) {
+                    if (estimate.quota < 120000000) {
+                        console.log('storage无痕模式');
+                    } else {
+                        console.log('storage#非无痕模式');
+                    }
+                });
+            } else {
+                console.log('storage#此浏览器版本无法检测是否无痕');
+            }
+        }();
+
+        try {
+            /*window.webkitStorageInfo.queryUsageAndQuota(webkitStorageInfo.TEMPORARY,
+                function(used, remaining) {
+                    console.log("Used quota: " + used + ", remaining quota: " + remaining);
+                    if (remaining < 120000000) {
+                        console.log('无痕模式');
+                    } else {
+                        console.log('非无痕模式');
+                    }
+                }, function(e) {
+                    console.log('Error', e);
+                }
+            );*/
+            navigator.webkitTemporaryStorage.queryUsageAndQuota(
+                function (used, remaining) {
+                    console.log("Used quota: " + used + ", remaining quota: " + remaining);
+                    if (remaining < 120000000) {
+                        console.log('无痕模式');
+                    } else {
+                        console.log('非无痕模式');
+                    }
+                }, function (e) {
+                    console.log('Error', e);
+                }
+            );
+        } catch (e) {
+            console.log("window.webkitStorageInfo error#" + e.toLocaleString())
+        }
+
+        /**
+         * Safari浏览器判断是否无痕模式
+         */
+        !function () {
+            let isPrivate = false;
+            try {
+                window.openDatabase(null, null, null, null);
+            } catch (_) {
+                isPrivate = true;
+            }
+            console.log("Safari是否无痕模式#" + isPrivate)
+        }()
+    </script>
+</head>
+<body>
+test
+</body>
+</html>
