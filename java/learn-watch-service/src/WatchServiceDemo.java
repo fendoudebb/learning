@@ -49,8 +49,7 @@ public class WatchServiceDemo {
     @SuppressWarnings("unchecked")
     public static void watchRecursionDir(Consumer<Path> consumer) {
         try {
-//            String filePath = System.getProperty(""user.home"");
-            String filePath = "C:\\Users\\zhangbj94\\Desktop";
+            String filePath = System.getProperty("user.home");
             Path targetPath = Paths.get(filePath);
             WatchService watchService = targetPath.getFileSystem().newWatchService();
             Files.walkFileTree(targetPath, new SimpleFileVisitor<Path>() {
