@@ -2,6 +2,7 @@ package com.example.demo.test;
 
 import com.mongodb.client.result.DeleteResult;
 import com.mongodb.client.result.UpdateResult;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -46,10 +47,12 @@ public class TestService {
 //        query.addCriteria(criteria2);
 //        query.skip(100);
 //        query.limit(10);
+//        query.with(Sort.by(Sort.Order.desc("_id"), Sort.Order.asc("create_ts")));
 
         Query query = Query.query(Criteria.where("status").is("ONLINE").and("update_ts").lte(System.currentTimeMillis()))
                 .skip(1000)
-                .limit(10);
+                .limit(10)
+                .with(Sort.by(Sort.Order.desc("_id")));
         List<TestDto> testDtos = mongoTemplate.find(query, TestDto.class);
     }
 
