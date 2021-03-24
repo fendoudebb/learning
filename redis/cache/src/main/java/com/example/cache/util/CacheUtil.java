@@ -3,6 +3,7 @@ package com.example.cache.util;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -37,6 +38,31 @@ public class CacheUtil {
             int count = 0;
             while (!lock.tryLock()) {
                 TimeUnit.SECONDS.sleep(300);
+                if (++count >= 5) {
+                    return null;
+                }
+            }
+            try {
+                data = getDataFromCache(keywords);
+                if (data == null) {
+                    data = getDataFromDB(keywords);
+                    saveToCache(keywords, data);
+                }
+            } finally {
+                lock.unlock();
+            }
+        }
+        return data;
+    }
+
+    // 使用随机数，免出现惊群效应，防止相同时间执行大量操作
+    public String getData3(String keywords) throws InterruptedException {
+        String data = getDataFromCache(keywords);
+        if (data == null) {
+            int count = 0;
+            while (!lock.tryLock()) {
+                long randomSleepTs = ThreadLocalRandom.current().nextLong(1000);
+                TimeUnit.MILLISECONDS.sleep(randomSleepTs);
                 if (++count >= 5) {
                     return null;
                 }
