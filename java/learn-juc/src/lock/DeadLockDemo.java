@@ -1,10 +1,12 @@
+package lock;
+
 import java.util.concurrent.TimeUnit;
 
-public class DeadLock {
+public class DeadLockDemo {
 
     public static void main(String[] args) {
         new Thread(() -> {
-            synchronized (DeadLock.class) {
+            synchronized (DeadLockDemo.class) {
                 try {
                     TimeUnit.SECONDS.sleep(1);
                 } catch (InterruptedException e) {
@@ -23,7 +25,7 @@ public class DeadLock {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                synchronized (DeadLock.class) {
+                synchronized (DeadLockDemo.class) {
                     System.out.println("Thread 2");
                 }
 
