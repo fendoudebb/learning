@@ -18,13 +18,13 @@ public class Test {
         System.out.println(endToday.getNano());
 
         //年，月，日
-        Period p = Period.between(now, LocalDate.ofYearDay(2020, 30));
+        Period p = Period.between(now, LocalDate.ofYearDay(2035, 30));
 
         System.out.printf("目标日期距离今天的时间差：%d 年 %d 个月 %d 天\n", p.getYears(), p.getMonths(), p.getDays());
 
         //纳秒，微妙，毫秒，秒，分，小时，半天，天，星期，月，年，十年，世纪，千年，纪元，永远
         long millisDiff = ChronoUnit.MILLIS.between(LocalDateTime.now(), endToday);
-        System.out.println("millis diff by ChronoUnit#" + millisDiff);
+        System.out.println("当前时间到今晚0点的毫秒值  ChronoUnit#" + millisDiff);
 
         //毫秒，秒，分钟，小时，
         Calendar endTodayCalendar = Calendar.getInstance();
