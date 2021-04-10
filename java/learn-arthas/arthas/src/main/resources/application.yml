@@ -1,1 +1,4 @@
-
+config:
+  url: http://www.baidu.com
+  isTest: true
+  maxConn: 100
