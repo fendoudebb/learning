@@ -1,10 +1,11 @@
-import sun.nio.ch.DefaultSelectorProvider;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.nio.ByteBuffer;
-import java.nio.channels.*;
+import java.nio.channels.SelectionKey;
+import java.nio.channels.Selector;
+import java.nio.channels.ServerSocketChannel;
+import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.Iterator;
 import java.util.Set;
@@ -14,7 +15,7 @@ public class NioTest12_Selector {
         //class sun.nio.ch.WindowsSelectorProvider
         System.out.println(SelectorProvider.provider().getClass());
         //class sun.nio.ch.WindowsSelectorProvider
-        System.out.println(DefaultSelectorProvider.create().getClass());
+//        System.out.println(DefaultSelectorProvider.create().getClass());
 
 
         int[] ports = new int[5];
