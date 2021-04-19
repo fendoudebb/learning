@@ -5,23 +5,22 @@ import java.time.LocalDateTime;
  */
 public class Parent {
 
-    public static final String PARENT_STATIC_VAR;
+    public static final ParentStaticFiled PARENT_STATIC_FILED = new ParentStaticFiled();
 
     public ParentMemberFiled parentMemberFiled = new ParentMemberFiled();
 
-    private String localVar;
+    private String parentMemberVar;
 
     static {
-        PARENT_STATIC_VAR = "psv";
-        System.out.println(LocalDateTime.now() + " Parent static block");
+        System.out.println(LocalDateTime.now() + " Parent static block#" + PARENT_STATIC_FILED);
     }
 
     {
-        System.out.println(LocalDateTime.now() + " Parent non static block");
+        System.out.println(LocalDateTime.now() + " Parent non static block#" + parentMemberVar);
     }
 
     public Parent() {
-        localVar = "lv";
-        System.out.println(LocalDateTime.now() + " Parent Constructor");
+        parentMemberVar = "pmv";
+        System.out.println(LocalDateTime.now() + " Parent Constructor#" + parentMemberVar);
     }
 }

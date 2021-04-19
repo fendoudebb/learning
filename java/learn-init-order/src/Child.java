@@ -5,21 +5,22 @@ import java.time.LocalDateTime;
  */
 public class Child extends Parent {
 
-    public static String CHILD_STATIC_VAR = "csv";
-    public String childLocalVar = "clv";
+    public static final ChildStaticFiled CHILD_STATIC_FILED = new ChildStaticFiled();
+
+    public String childMemberVar = "cmv";
 
     public ChildMemberFiled childMemberFiled = new ChildMemberFiled();
 
     static {
-        System.out.println(LocalDateTime.now() + " Child static block#" + CHILD_STATIC_VAR);
+        System.out.println(LocalDateTime.now() + " Child static block#" + CHILD_STATIC_FILED);
     }
 
     {
-        System.out.println(LocalDateTime.now() + " Child non static block#" + childLocalVar);
+        System.out.println(LocalDateTime.now() + " Child non static block#" + childMemberVar);
     }
 
     public Child() {
-        System.out.println(LocalDateTime.now() + " Child constructor#" + childLocalVar);
+        System.out.println(LocalDateTime.now() + " Child constructor#" + childMemberVar);
     }
 
     public static void main(String[] args) {
