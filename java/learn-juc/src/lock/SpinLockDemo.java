@@ -1,51 +1,58 @@
 package lock;
 
+import java.time.LocalDateTime;
 import java.util.concurrent.atomic.AtomicReference;
 
+/**
+ * zbj: created on 2021/2/28 14:36.
+ * 自旋锁
+ */
 public class SpinLockDemo {
-
     AtomicReference<Thread> atomicReference = new AtomicReference<>();
 
-    public void myLock() {
+    public void myLock () {
         Thread thread = Thread.currentThread();
-        System.out.println(thread.getName() + "\tcome in");
+        System.out.println(LocalDateTime.now() +"\t" + thread.getName() + "\t come in");
         while (!atomicReference.compareAndSet(null, thread)) {
-
+            System.out.println(thread.getName() + "自旋中");
         }
     }
 
-    public void myUnlock() {
+    public void myUnLock() {
         Thread thread = Thread.currentThread();
-        System.out.println(thread.getName() + "\tinvoke unlock");
-        while (!atomicReference.compareAndSet(thread, null)) {
-
-        }
+        atomicReference.compareAndSet(thread, null);
+        System.out.println(LocalDateTime.now() +"\t" + thread.getName() + "\t invoke my unlock");
     }
 
     public static void main(String[] args) {
-        SpinLockDemo spinLock = new SpinLockDemo();
-        new Thread(() -> {
-            spinLock.myLock();
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            spinLock.myUnlock();
-        },"AA").start();
+        SpinLockDemo spinLockDemo = new SpinLockDemo();
 
         new Thread(() -> {
+            spinLockDemo.myLock();
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-        }).start();
+            spinLockDemo.myUnLock();
+        },"AAA").start();
+
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
         new Thread(() -> {
-            spinLock.myLock();
+            spinLockDemo.myLock();
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+            spinLockDemo.myUnLock();
+        }, "BBB").start();
 
-            spinLock.myUnlock();
-        },"BB").start();
     }
+
 }
