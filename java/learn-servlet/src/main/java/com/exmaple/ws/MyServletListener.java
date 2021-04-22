@@ -17,8 +17,13 @@ public class MyServletListener implements ServletRequestListener {
     public void requestInitialized(ServletRequestEvent sre) {
         HttpServletRequest request = (HttpServletRequest) sre.getServletRequest();
         HttpSession session = request.getSession();
-        System.out.println("requestInitialized session = " + session);
-        session.setAttribute("ClientIP", sre.getServletRequest().getRemoteAddr());//把HttpServletRequest中的IP地址放入HttpSession中，关键字可任取，此处为ClientIP
+        System.out.println("requestInitialized session = " + session + ", getRequestURL#" + request.getRequestURL().toString() + ", getRemoteHost#" + request.getRemoteHost() + ", getRemoteAddr#" + request.getRemoteAddr());
+        session.setAttribute("ClientIP", request.getRemoteAddr());//把HttpServletRequest中的IP地址放入HttpSession中，关键字可任取，此处为ClientIP
+        String host = request.getHeader("Host");
+        String xRealIP = request.getHeader("X-Real-IP");
+        String  xForwardedFor = request.getHeader("X-Forwarded-For");
+
+        System.out.println("host#" + host + ", X-Real-IP#" + xRealIP + ", X-Forwarded-For#" + xForwardedFor);
     }
 
     @Override

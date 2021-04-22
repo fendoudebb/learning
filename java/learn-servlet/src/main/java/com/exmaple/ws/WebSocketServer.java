@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
+import java.net.InetSocketAddress;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
@@ -31,7 +32,10 @@ public class WebSocketServer {
     @OnOpen
     public void onOpen(@PathParam("username") String username, Session session) {
         HttpSession httpSession = (HttpSession) session.getUserProperties().get(HttpSession.class.getName());
-        System.out.println("11111111111111111#" + httpSession);
+        System.out.println("ClientIP#" + httpSession.getAttribute("ClientIP"));
+
+        InetSocketAddress remoteAddress = WebsocketUtil.getRemoteAddress(session);
+        System.out.println("remoteAddress: " + remoteAddress.toString());
 
 //        httpSession.getAttribute("ClientIP");
 
