@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        let x = 10;       // 允许
+        // let x = 6; // Uncaught SyntaxError: Identifier 'x' has already been declared
+
+        var carName = "car";
+
+        console.log(window.carName); // car
+
+        let carName2 = "car2";
+        console.log(window.carName2); // undefined
+        console.log(Date.now()); // undefined
+
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>
