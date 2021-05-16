@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        var num1 = 9.56;
+
+        console.log(num1.toFixed(2)); // 非常适合处理金钱。
+
+        var x = 123;
+        x.valueOf();            // 从变量 x 返回 123
+        (123).valueOf();        // 从文本 123 返回 123
+        (100 + 23).valueOf();   // 从表达式 100 + 23 返回 123
+
+        x = true;
+        console.log(Number(x));        // 返回 1
+        x = false;
+        console.log(Number(x));        // 返回 0
+        x = new Date();
+        console.log(Number(x));       // 转时间戳 返回 1404568027739
+        x = "10"
+        console.log(Number(x));      // 返回 10
+        x = "10 20"
+        console.log(Number(x));        // 返回 NaN
+
+
+        console.log(parseInt("10"));         // 返回 10
+        console.log(parseInt("10.33"));      // 返回 10
+        console.log(parseInt("10 20 30"));   // 返回 10
+        console.log(parseInt("10 years"));   // 返回 10
+        console.log(parseInt("years 10"));   // 返回 NaN
+
+        console.log(parseFloat("10"));        // 返回 10
+        console.log(parseFloat("10.33"));     // 返回 10.33
+        console.log(parseFloat("10 20 30"));  // 返回 10
+        console.log(parseFloat("10 years"));  // 返回 10
+        console.log(parseFloat("years 10"));  // 返回 NaN
+
+        x = Number.MAX_VALUE;
+
+        console.log(x);
+
+        x = Number.MIN_VALUE;
+        console.log(x);
+        x = Number.POSITIVE_INFINITY;
+        console.log(x);
+        x = Number.NEGATIVE_INFINITY;
+        console.log(x);
+        x = Number.MAX_SAFE_INTEGER;
+        console.log(x);
+        x = Number.MIN_SAFE_INTEGER;
+        console.log(x);
+        x = Number.NaN;
+        console.log(x);
+
+
+
+        console.log(Number.isInteger("123"));
+        console.log(Number.isInteger(12.2));
+        console.log(Number.isInteger(12));
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
