@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        const map = new Map();
+        map.set("key1", "value1");
+        map.set("key2", "value2");
+
+        for (let [key, value] of map) {
+            console.log(key + " is " + value);
+        }
+
+        // 获取键名
+        for (let [key] of map) {
+            // ...
+        }
+
+        // 获取键值
+        for (let [,value] of map) {
+            // ...
+        }
+
+        let jsonData = {
+            id: 42,
+            status: "OK",
+            data: [867, 5309]
+        };
+
+        let { id, status, data: number } = jsonData;
+
+        console.log(id, status, number);
+        console.log(`sss#${id}`);
+
+        let arr = [3, 5, 2, 2, 5, 5];
+        let unique = [...new Set(arr)];
+        console.log(typeof unique);
+        console.log(unique);
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>
