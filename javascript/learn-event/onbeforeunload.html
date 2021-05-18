@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        /*window.onbeforeunload = function (e) {
+            e = e || window.event;
+
+        e.returnValue = "我在这写点东西...";
+
+            // 兼容IE8和Firefox 4之前的版本
+            if (e) {
+                e.returnValue = '关闭提示';
+            }
+
+            // Chrome, Safari, Firefox 4+, Opera 12+ , IE 9+
+            return '关闭提示';
+        };*/
+
+        function test(event) {
+            event.preventDefault()
+        }
+
+        window.addEventListener('beforeunload', (event) => {
+            // Cancel the event as stated by the standard.
+            event.preventDefault();
+            // Chrome requires returnValue to be set.
+            event.returnValue = '';
+        });
+    </script>
+
+</head>
+<body >
+
+</body>
+</html>
