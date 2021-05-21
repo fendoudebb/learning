@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+        var person = {
+            firstname: 'Bj',
+            lastname: "Zhang",
+            age: 18,
+            birthday: new Date(1992),
+            hobby: ['basketball', 'coding'],
+
+            get lang() {
+                return this.language;
+            },
+            set lang(lang) {
+                this.language = lang;
+            },
+
+            fullName: function () {
+                return this.firstname + this.lastname;
+            }
+        }
+
+        Object.defineProperty(person, "add", {
+            set : function (value) {this.counter += value;}
+        });
+
+
+
+        console.log(typeof person)
+        console.log(typeof person.age)
+        console.log(typeof person["lastname"])
+        console.log(person.fullName())
+
+        console.log("Bill".constructor);
+        console.log("Bill".constructor.toString());
+
+
+        function Person(first, last, age, eye) {
+            this.firstName = first;
+            this.lastName = last;
+            this.age = age;
+            this.eyeColor = eye;
+        }
+
+
+        Person.prototype.nationality = "English";
+
+        var myFather = new Person("Bill", "Gates", 62, "blue");
+        console.log(myFather.age);
+        console.log(myFather.firstName);
+        console.log(myFather.nationality);
+        console.log(myFather);
+        console.log(typeof myFather);
+
+        let s1 = Person("Bill2", "Gates2", 6, "blue2");
+        console.log(typeof s1);
+
+
+        function aaa() {
+            return "bbb";
+        }
+
+        let aaa1 = new aaa();
+        console.log(typeof aaa1)
+
+        let s = aaa();
+
+        console.log(typeof s);
+
+    </script>
+
+</head>
+<body>
+
+</body>
+</html>
