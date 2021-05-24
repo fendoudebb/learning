@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.0/jquery.js"></script>
+
+    <script>
+        window.onfocus = function (event) {
+
+        }
+
+        window.onblur = function (event) {
+
+        }
+
+        window.onstorage = function (event) {
+            if (event.storageArea === localStorage) {}
+            if (event.key === 'logout-event') {
+                // ..
+            }
+        }
+
+        window.addEventListener('storage', function(event){
+            if (event.storageArea === localStorage) {}
+            if (event.key === 'logout-event') {
+                // ..
+            }
+        });
+
+        function login() {
+            $.get("http://" + window.location.host + "/login" + location.search, function (data, status) {
+                alert("login Data: " + data + "\nStatus: " + status);
+            });
+        }
+
+        function info() {
+            $.get("http://" + window.location.host + "/info", function (data, status) {
+                alert("info Data success: " + data + "\nStatus: " + status);
+            }).fail(function (status) {
+                alert("info Data error: Status: " + JSON.stringify(status));
+            });
+        }
+
+        function logout() {
+            $.get("http://" + window.location.host + "/logout", function (data, status) {
+                alert("logout Data: " + data + "\nStatus: " + status);
+            });
+        }
+    </script>
+
+</head>
+<body>
+
+<button onclick="login()">登陆</button>
+<button onclick="info()">获取</button>
+<button onclick="logout()">登出</button>
+
+</body>
+</html>
