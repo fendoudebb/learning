@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <script>
+        console.log(document.characterSet)
+    </script>
+</head>
+<body>
+
+<form action="/" method="post">
+    <input type="text" name="fname" required oninvalid="setCustomValidity('不能为空aaa')" oninput="setCustomValidity('')"/>
+    <input type="submit" value="提交">
+</form>
+
+
+</body>
+</html>
