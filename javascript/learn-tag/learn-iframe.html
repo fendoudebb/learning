@@ -6,64 +6,18 @@
 </head>
 <body>
 
-<iframe seamless frameborder=0 scrolling=no width="100%" height="300px" srcdoc='
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/2.1.38/go.js" crossorigin="anonymous"></script>
-    <style>
-        #myDiagramDiv canvas {
-            outline: none;
-        }
-    </style>
-</head>
-<body style="margin: 0;">
+<iframe seamless frameborder=0 scrolling=no srcdoc='<html><body style="margin: 0">Hello, <b>world1</b>.</body></html>'></iframe>
 
-<div id="myDiagramDiv" style="height: 300px;background: #E4E7EB"></div>
+<iframe seamless frameborder=1 scrolling=no src='javascript: `<html><body style="margin: 0">Hello, <b>world2</b>.</body></html>`'></iframe>
+
+<iframe seamless frameborder=0 scrolling=yes src='data:text/html;charset=utf-8,%3Chtml%3E%3Cbody%20style=%22margin:%200%22%3EHello,%20%3Cb%3Eworld3%3C/b%3E.%3C/body%3E%3C/html%3E'></iframe>
+
+<iframe id="foo" seamless frameborder=0 scrolling=auto></iframe>
 <script>
-    var $ = go.GraphObject.make;
-
-    var diagram = $(go.Diagram, "myDiagramDiv",
-        {
-            allowHorizontalScroll: false,
-            allowVerticalScroll: false,
-            allowMove: true,
-            allowSelect: true
-        }
-    );
-
-    diagram.add(
-        $(go.Node, "Vertical",
-            $(go.Panel, "Auto",
-                $(go.Shape, "Rectangle",
-                    {
-                        stroke: "#00FFFF",
-                        strokeWidth: 2,
-                        fill: "#F0F8FF",
-                        desiredSize: new go.Size(120, 60),
-                    },
-                ),
-                $(go.TextBlock,
-                    {margin: 3, stroke: "green", text: "程序员技术之旅"},
-                ),
-                {
-                    contextClick: function (e, node) {
-                        node.elements.each(function (element) {
-                            console.log(element);
-                        })
-                    },
-                }
-            ),
-        )
-    )
+    let iframe = document.getElementById('foo'),
+        iframedoc = iframe.contentDocument || iframe.contentWindow.document;
+    iframedoc.body.innerHTML = 'Hello world4';
 </script>
-
-</body>
-</html>
-'></iframe>
-
 
 </body>
 </html>
