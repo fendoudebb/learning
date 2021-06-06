@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="base2.js"></script>
+    <script src="packer.js"></script>
+    <script src="Words.js"></script>
+    <style>
+        .packer-textarea {
+            border: 1px solid #4CAF50;
+            border-radius: 2px;
+            background-color: #ffffffff;
+            min-width: 100%;
+            max-width: 100%;
+            min-height: 50vh;
+            max-height: 50vh;
+            outline: none; /*没有黄框*/
+            resize: none; /*不能拖拽*/
+            display: block;
+            font-family: Menlo,Monaco,Consolas,Courier New,monospace;
+        }
+    </style>
+</head>
+<body>
+
+<div>
+    <div style="display: inline-block;width: 45%;text-align: left;margin-right: 5%">
+        <textarea id="input" class="packer-textarea" placeholder="请输入 HTML/JavaScript 代码" title="请输入 HTML/JavaScript 代码"></textarea>
+    </div>
+    <div style="display: inline-block;width: 45%;text-align: left;">
+        <textarea id="output" class="packer-textarea" placeholder="压缩后 HTML/JavaScript 代码" title="压缩后 HTML/JavaScript 代码"></textarea>
+    </div>
+</div>
+
+
+<button class="shadow button" onclick="regularCompress()">常规压缩</button>
+<button class="shadow button" onclick="variableCompress()">压缩变量</button>
+
+<script>
+    function regularCompress() {
+        let inputE = document.getElementById("input");
+        let outputE = document.getElementById("output");
+        if (!inputE.value) {
+            return
+        }
+        var packer = new Packer;
+
+        outputE.value = packer.pack(inputE.value, 0, 0);
+    }
+
+    function variableCompress() {
+        let inputE = document.getElementById("input");
+        let outputE = document.getElementById("output");
+        if (!inputE.value) {
+            return
+        }
+        var packer = new Packer;
+
+        outputE.value = packer.pack(inputE.value, 0, 1);
+    }
+
+</script>
+
+
+</body>
+</html>
