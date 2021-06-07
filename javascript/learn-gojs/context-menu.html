@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/gojs/2.1.38/go.js" crossorigin="anonymous"></script>
+    <style>
+        #myDiagramDiv canvas {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="myDiagramDiv" style="width:500px; height:300px;background: #E4E7EB"></div>
+    <script>
+
+        var $ = go.GraphObject.make;
+
+        var diagram = $(go.Diagram, "myDiagramDiv",
+            {
+                allowHorizontalScroll: false,
+                allowVerticalScroll: false,
+                allowMove: false,
+                allowSelect: true
+            }
+        );
+
+        diagram.nodeTemplate =
+            $(go.Node, "Auto",
+                $(go.Shape, "Circle",
+                    {
+                        stroke: "green",
+                        strokeWidth: 2,
+                        fill: "red",
+                        desiredSize: new go.Size(60, 60),
+                    },
+                ),
+                $(go.TextBlock,
+                    { margin: 3 },
+                    new go.Binding("text", "key")
+                ),
+                {
+                    contextMenu: $("ContextMenu", "Vertical",
+                        {
+                            background: "transparent",
+                            width: 100,
+                        },
+                        $("ContextMenuButton",
+                            {
+                                "ButtonBorder.fill": "white",
+                                "_buttonFillOver": "#E9F5FF",
+                                "_buttonFillPressed": "red",
+                                visible: true,
+                            },
+                            $(go.TextBlock, {
+                                text: "Alert1",
+                                margin: new go.Margin(10, 0, 10, 0),
+                            }),
+                            {
+                                cursor: "pointer",
+                                click: (e, obj) => {
+                                    alert(obj.part.data.key + ":1")
+                                },
+                            }
+                        ),
+                        $("ContextMenuButton",
+                            {
+                                "ButtonBorder.fill": "white",
+                                "_buttonFillOver": "#E9F5FF",
+                            },
+                            new go.Binding("visible", "visible"),
+                            $(go.TextBlock, {
+                                text: "Alert2",
+                                margin: new go.Margin(10, 0, 10, 0),
+                            }),
+                            {
+                                cursor: "pointer",
+                                click: (e, obj) => {
+                                    alert(obj.part.data.key + ":2")
+                                },
+                            }
+                        ),
+                        $("ContextMenuButton",
+                            {
+                                "ButtonBorder.fill": "white",
+                                "ButtonBorder.stroke": "darkcyan",
+                                "ButtonBorder.strokeWidth": 3,
+                                "_buttonFillOver": "#E9F5FF",
+                                "_buttonStrokeOver": "darkcyan",
+                                "_buttonStrokePressed": "darkcyan",
+                                visible: true,
+                                margin: new go.Margin(10, 0, 10, 0),
+                            },
+                            $(go.TextBlock, {
+                                text: "Alert3",
+                                margin: new go.Margin(10, 0, 10, 0),
+                            }),
+                            {
+                                cursor: "pointer",
+                                click: (e, obj) => {
+                                    console.log(obj)
+                                    alert(obj.part.data.key + ":3")
+                                },
+                            }
+                        )
+                    ),
+                },
+            );
+
+        diagram.model = new go.Model(
+            [
+                { key: "Circle", visible: false },
+            ]
+        );
+
+    </script>
+</body>
+
+</html>
