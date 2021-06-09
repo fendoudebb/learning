@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        document.onvisibilitychange = function () {
+            if (document.visibilityState == "hidden") {
+                document.title = "waiting for you!";
+            } else {
+                document.title = "welcome back~";
+            }
+        }
+    </script>
+</head>
+
+<body>
+    Hello document visibilitychange
+</body>
+
+</html>
