@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        function saveTo() {
+            localStorage.setItem("change-event", new Date().toJSON())
+        }
+        window.onstorage = function (e) {
+            console.log(e)
+            console.log(`The ${e.key} key has been changed from ${e.oldValue} to ${e.newValue}.`);
+            console.log(document.hasFocus())
+
+            // IE will receive the event both the current tab and other tab
+            if (!document.hasFocus() && e.key === "change-event") {
+                console.log("do some business")
+            }
+        };
+    </script>
+</head>
+
+<body>
+    <button onclick="saveTo()">click</button>
+</body>
+
+</html>
