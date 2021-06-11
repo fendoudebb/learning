@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/gojs/2.1.38/go.js" crossorigin="anonymous"></script>
+    <style>
+        #myDiagramDiv canvas {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="myDiagramDiv" style="width:100%; height:300px;background: #E4E7EB"></div>
+    <script>
+
+        var $ = go.GraphObject.make;
+
+        var diagram = $(go.Diagram, "myDiagramDiv",
+            {
+                allowHorizontalScroll: false,
+                allowVerticalScroll: false,
+                allowMove: false,
+                allowSelect: true
+            }
+        );
+
+        diagram.toolManager.contextMenuTool.showContextMenu = (cm, obj) => {
+            go.ContextMenuTool.prototype.showContextMenu.call(diagram.toolManager.contextMenuTool, cm, obj);
+            const curCM = this.diagram.toolManager.contextMenuTool.currentContextMenu;
+            if (curCM instanceof go.Adornment && curCM.adornedPart) {
+                const shape = curCM.adornedPart.elt(0);
+                if (shape instanceof go.Shape) {
+                    shape.stroke = "red";
+                    shape.fill = "green";
+                }
+            }
+        };
+
+        diagram.toolManager.contextMenuTool.hideContextMenu = () => {
+            const curCM = this.diagram.toolManager.contextMenuTool.currentContextMenu;
+            if (curCM instanceof go.Adornment && curCM.adornedPart) {
+                const shape = curCM.adornedPart.elt(0);
+                if (shape instanceof go.Shape) {
+                    shape.stroke = "green";
+                    shape.fill = "red";
+                }
+            }
+            go.ContextMenuTool.prototype.hideContextMenu.call(diagram.toolManager.contextMenuTool);
+        };
+
+        diagram.nodeTemplate =
+            $(go.Node, "Auto",
+                $(go.Shape, "Circle",
+                    {
+                        stroke: "green",
+                        strokeWidth: 2,
+                        fill: "red",
+                        desiredSize: new go.Size(60, 60),
+                    },
+                ),
+                $(go.TextBlock,
+                    { margin: 3 },
+                    new go.Binding("text", "key")
+                ),
+                {
+                    contextMenu: $("ContextMenu", "Vertical",
+                        {
+                            background: "transparent",
+                            width: 100,
+                        },
+                        $("ContextMenuButton",
+                            {
+                                "ButtonBorder.fill": "white",
+                                "_buttonFillOver": "skyblue",
+                                visible: true,
+                            },
+                            $(go.TextBlock, {
+                                text: "Alert",
+                                margin: new go.Margin(10, 0, 10, 0),
+                            }),
+                            {
+                                cursor: "pointer",
+                                click: (e, obj) => {
+                                    alert(obj.part.data.key)
+                                },
+                            }
+                        ),
+                    )
+                },
+            );
+
+        diagram.model = new go.Model(
+            [
+                { key: "Circle" },
+            ]
+        );
+
+    </script>
+</body>
+
+</html>
