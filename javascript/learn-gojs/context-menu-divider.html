@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/gojs/2.1.38/go.js" crossorigin="anonymous"></script>
+    <style>
+        #myDiagramDiv canvas {
+            outline: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="myDiagramDiv" style="width:500px; height:300px;background: #E4E7EB"></div>
+    <script>
+
+        var $ = go.GraphObject.make;
+
+        var diagram = $(go.Diagram, "myDiagramDiv",
+            {
+                allowHorizontalScroll: false,
+                allowVerticalScroll: false,
+                allowMove: false,
+                allowSelect: true
+            }
+        );
+
+        diagram.nodeTemplate =
+            $(go.Node, "Auto",
+                $(go.Shape, "Circle",
+                    {
+                        stroke: "green",
+                        strokeWidth: 2,
+                        fill: "red",
+                        desiredSize: new go.Size(60, 60),
+                    },
+                ),
+                $(go.TextBlock,
+                    { margin: 3 },
+                    new go.Binding("text", "key")
+                ),
+                {
+                    contextMenu: $("ContextMenu", "Auto",
+                        {
+                            background: "white",
+                        },
+                        $(go.Shape, "Rectangle",
+                            {
+                                stroke: "blue",
+                                strokeWidth: 0.5,
+                                fill: "white",
+                                width: 100,
+                            },
+                        ),
+                        $(go.Panel, "Vertical",
+                            $("ContextMenuButton",
+                                {
+                                    "ButtonBorder.fill": "white",
+                                    "_buttonFillOver": "#E9F5FF",
+                                    "_buttonFillPressed": "red",
+                                    visible: true,
+                                    desiredSize: new go.Size(100 - 0.5, 50 - 0.5),
+                                    padding: new go.Margin(4, 0, 4, 0),
+                                },
+                                $(go.TextBlock, {
+                                    text: "Alert1",
+                                    textAlign: "center",
+                                    verticalAlignment: go.Spot.Center,
+                                }),
+                                {
+                                    cursor: "pointer",
+                                    click: (e, obj) => {
+                                        alert(obj.part.data.key + ":1")
+                                    },
+                                }
+                            ),
+                            $(go.Shape, "LineH", { strokeWidth: 0.5, height: 0.5, width: 100, stretch: go.GraphObject.Horizontal }),
+                            $("ContextMenuButton",
+                                {
+                                    "ButtonBorder.fill": "white",
+                                    "_buttonFillOver": "#E9F5FF",
+                                    "_buttonFillPressed": "red",
+                                    visible: true,
+                                    desiredSize: new go.Size(100 - 0.5, 50 - 0.5),
+                                    padding: new go.Margin(4, 0, 4, 0),
+                                },
+                                $(go.TextBlock, {
+                                    text: "Alert2",
+                                    textAlign: "center",
+                                    verticalAlignment: go.Spot.Center,
+                                }),
+                                {
+                                    cursor: "pointer",
+                                    click: (e, obj) => {
+                                        alert(obj.part.data.key + ":2")
+                                    },
+                                }
+                            ),
+                        ),
+
+                    ),
+                },
+            );
+
+        diagram.model = new go.Model(
+            [
+                { key: "Circle", visible: true },
+            ]
+        );
+
+    </script>
+</body>
+
+</html>
