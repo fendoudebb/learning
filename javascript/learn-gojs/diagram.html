@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gojs/2.1.38/go.js" crossorigin="anonymous"></script>
+    <style>
+        #myDiagramDiv canvas {
+            outline: none;
+        }
+    </style>
+</head>
+<body style="margin: 0;">
+
+<div id="myDiagramDiv" style="height: 300px;background: #E4E7EB"></div>
+<script>
+    var $ = go.GraphObject.make;
+
+    var diagram = $(go.Diagram, "myDiagramDiv",
+        {
+            allowHorizontalScroll: false,
+            allowVerticalScroll: false,
+            allowMove: true,
+            allowSelect: true
+        }
+    );
+
+    diagram.add(
+        $(go.Node, "Vertical",
+            $(go.Panel, "Auto",
+                $(go.Shape, "Rectangle",
+                    {
+                        stroke: "#00FFFF",
+                        strokeWidth: 2,
+                        fill: "#F0F8FF",
+                        desiredSize: new go.Size(120, 60),
+                    },
+                ),
+                $(go.TextBlock,
+                    {margin: 3, stroke: "green", text: "程序员技术之旅"},
+                ),
+                {
+                    contextClick: function (e, node) {
+                        node.elements.each(function (element) {
+                            console.log(element);
+                        })
+                    },
+                }
+            ),
+        )
+    )
+</script>
+
+</body>
+</html>
