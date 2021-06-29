@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script>
+        let originalSize;
+        window.onload = function () {
+            originalSize = window.innerWidth + window.innerHeight;
+            document.getElementById("init").innerText = "originalSize#" + originalSize + ", innerWidth#" + window.innerWidth + ", innerHeight#" + window.innerHeight;
+        }
+
+        window.addEventListener("resize", this.adjustDisplay);
+        function adjustDisplay() {
+            const nowSize = window.innerWidth + window.innerHeight;
+            document.getElementById("resize").innerText = "originalSize#" + originalSize + ", nowSize#" + nowSize + ", innerWidth#" + window.innerWidth + ", innerHeight#" + window.innerHeight;
+            if (originalSize > nowSize) {
+                // 软键盘弹出
+                // document.getElementById("myDiv").style.display = "none";
+                document.getElementById("status").innerText = "软键盘弹出"
+            } else {
+                // 软键盘隐藏
+                // document.getElementById("myDiv").style.display = "block";
+                document.getElementById("status").innerText = "软键盘隐藏"
+            }
+        }
+
+        // let innerHeight;
+        // window.onload = function () {
+        //     innerHeight = window.innerHeight;
+        //     document.getElementById("init").innerText = "innerHeight#" + window.innerHeight;
+        // }
+
+        // window.addEventListener('resize', () => {
+        //     const newInnerHeight = window.innerHeight;
+        //     document.getElementById("resize").innerText = "originalInnerHeight#" + innerHeight + ", newInnerHeight#" + newInnerHeight;
+        //     if (innerHeight > newInnerHeight) {
+        //         // 键盘弹出事件处理
+        //         document.getElementById("status").innerText = "软键盘弹出"
+
+        //     } else {
+        //         // 键盘收起事件处理
+        //         document.getElementById("status").innerText = "软键盘隐藏"
+        //     }
+        // });
+    </script>
+</head>
+
+<body>
+    <div id="init"></div>
+    <div id="resize"></div>
+    <div id="status">test</div>
+    <input type="text">
+</body>
+
+</html>
