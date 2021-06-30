@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script>
+        if ("onorientationchange" in window) {
+            window.onorientationchange = function (event) {
+                document.getElementById("init").innerText = "window.onorientationchange innerWidth#" + window.innerWidth + ", innerHeight#" + window.innerHeight;
+                document.getElementById("init2").innerText = "window.onorientationchange window.screen.width#" + window.screen.width + ", window.screen.height#" + window.screen.height;
+                document.getElementById("init3").innerText = "window.onorientationchange window.screen.availWidth#" + window.screen.availWidth + ", window.screen.availHeight#" + window.screen.availHeight;
+                document.getElementById("status").innerText = screen.orientation.type;
+                console.log(screen.orientation);
+            }
+        } else if ("screen" in window && "orientation" in window.screen) {
+            window.screen.orientation.addEventListener("change", function (e) {
+                document.getElementById("init").innerText = "window.screen.orientation change innerWidth#" + window.innerWidth + ", innerHeight#" + window.innerHeight;
+                document.getElementById("init2").innerText = "window.screen.orientation change  window.screen.width#" + window.screen.width + ", window.screen.height#" + window.screen.height;
+                document.getElementById("init3").innerText = "window.screen.orientation change  window.screen.availWidth#" + window.screen.availWidth + ", window.screen.availHeight#" + window.screen.availHeight;
+                document.getElementById("status").innerText = screen.orientation.type;
+                console.log(screen.orientation);
+            }, false);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="init">test</div>
+    <br>
+    <div id="init2">test</div>
+    <br>
+    <div id="init3">test</div>
+    <br>
+    <div id="status">test</div>
+    <br>
+    <input type="text">
+</body>
+
+</html>
