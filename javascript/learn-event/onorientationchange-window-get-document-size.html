@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <script>
+        var body = document.documentElement || document.body;
+        if ("onorientationchange" in window) {
+            window.onorientationchange = onScreenRotate;
+        } else if ("screen" in window && "orientation" in window.screen) {
+            window.screen.orientation.addEventListener("change", onScreenRotate);
+        }
+
+        function onScreenRotate(event) {
+            setTimeout(function () {
+                document.getElementById("init").innerText = "body.clientWidth#" + body.clientWidth + ", body.clientHeight#" + body.clientHeight;
+                document.getElementById("status").innerText = screen.orientation.type;
+            }, 200)
+
+        }
+    </script>
+</head>
+
+<body>
+    <div id="init">test</div>
+    <br>
+    <div id="status">test</div>
+    <br>
+    <input type="text">
+</body>
+
+</html>
